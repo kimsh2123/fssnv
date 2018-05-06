@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.mycom.mapper.Ag113Mapper">
+
+	<select id="listAll" resultType="org.mycom.domain.Ag113VO">
+	<![CDATA[
+	select 
+		  a.num
+		, a.make_date
+		, a.issues_no
+		, a.issu_name
+		, (select c.p_name from code_tbl c 
+		    where c.subject='ag113' 
+		      and c.types=2 
+		      and c.param=a.trade_type) as trade_type
+		, a.trade_date
+		, a.up_date 
+	from 
+		ag113_tbl a 
+	where a.make_date = #{make_date}
+	order by a.num desc
+	]]>
+	</select>
+	
+	<select id="listPaging" resultType="org.mycom.domain.Ag113VO">
+	<![CDATA[
+	select 
+		  a.num
+		, a.make_date
+		, a.issues_no
+		, a.issu_name
+		, (select c.p_name from code_tbl c 
+		    where c.subject='ag113' 
+		      and c.types=2 
+		      and c.param=a.trade_type) as trade_type
+		, a.trade_date
+		, a.up_date 
+	from 
+		ag113_tbl a 
+	where a.make_date = #{make_date}
+	order by a.num desc
+	limit #{pageStrat}, #{perPageNum}
+	]]>
+	</select>	
+	
+	<select id="totalCount" resultType="int">
+	<![CDATA[
+	select count(*)
+	from ag113_tbl
+	where make_date = #{make_date}
+	]]>
+	</select>
+	
+	<insert id="register">
+	insert into ag113_tbl 
+	select ifnull(max(num),0)+1
+		,#{make_date}
+		,#{comp_code}
+		,#{issues_no}
+		,#{trade_type}
+		,#{trade_date}
+		,#{comp_name}
+		,#{issu_name}
+		,#{publish_code}
+		,#{publish_rel}
+		,#{ordr_time}
+		,#{ordr_qty}
+		,#{ordr_price}
+		,#{amd_rtn}
+		,#{amd_qty}
+		,#{last_ccl_time}
+		,#{ccl_rtn}
+		,#{ccl_qty}
+		,#{last_cntr_time}
+		,#{cntr_qty}
+		,#{cntr_price}
+		,#{book_value}
+		,#{counterpart}
+		,#{cpart_rel}
+		,#{holding_qty}
+		,#{market_mature}
+		,now()
+		,#{up_id}
+	from ag113_tbl
+	where make_date = #{make_date}
+	</insert>
+	
+	<select id="listOne" resultType="org.mycom.domain.Ag113VO">
+	select num			,make_date
+		,comp_code		,issues_no
+		,trade_type		,trade_date
+		,comp_name		,issu_name
+		,publish_code	,publish_rel
+		,ordr_time		,ordr_qty
+		,ordr_price		,amd_rtn
+		,amd_qty		,last_ccl_time
+		,ccl_rtn		,ccl_qty
+		,last_cntr_time	,cntr_qty
+		,cntr_price		,book_value
+		,counterpart	,cpart_rel
+		,holding_qty	,market_mature
+		,up_date		,up_id
+	from ag113_tbl
+	where make_date = #{make_date}
+	and num = #{num}
+	</select>
+	
+	<update id="update">
+	update ag113_tbl
+	set  comp_code=#{comp_code}
+		,issues_no=#{issues_no}
+		,trade_type=#{trade_type}
+		,trade_date=#{trade_date}
+		,comp_name=#{comp_name}
+		,issu_name=#{issu_name}
+		,publish_code=#{publish_code}
+		,publish_rel=#{publish_rel}
+		,ordr_time=#{ordr_time}
+		,ordr_qty=#{ordr_qty}
+		,ordr_price=#{ordr_price}
+		,amd_rtn=#{amd_rtn}
+		,amd_qty=#{amd_qty}
+		,last_ccl_time=#{last_ccl_time}
+		,ccl_rtn=#{ccl_rtn}
+		,ccl_qty=#{ccl_qty}
+		,last_cntr_time=#{last_cntr_time}
+		,cntr_qty=#{cntr_qty}
+		,cntr_price=#{cntr_price}
+		,book_value=#{book_value}
+		,counterpart=#{counterpart}
+		,cpart_rel=#{cpart_rel}
+		,holding_qty=#{holding_qty}
+		,market_mature=#{market_mature}
+		,up_date=now()
+		,up_id=#{up_id}
+	where make_date = #{make_date}
+	and num = #{num}
+	</update>
+	
+	<delete id="delOne">
+	delete from ag113_tbl 
+	where make_date = #{make_date}
+	and num = #{num} 
+	</delete>
+	
+	<delete id="delAll">
+	delete from ag113_tbl 
+	where make_date = #{make_date} 
+	</delete>
+	
+	<select id="allColSelect" resultType="org.mycom.domain.Ag113VO">
+	<![CDATA[
+	select num
+		,make_date
+		,comp_code
+		,issues_no
+		,trade_type
+		,trade_date
+		,comp_name
+		,issu_name
+		,publish_code
+		,publish_rel
+		,ordr_time
+		,ordr_qty
+		,ordr_price
+		,amd_rtn
+		,amd_qty
+		,last_ccl_time
+		,ccl_rtn
+		,ccl_qty
+		,last_cntr_time
+		,cntr_qty
+		,cntr_price
+		,book_value
+		,counterpart
+		,cpart_rel
+		,holding_qty
+		,market_mature
+		,up_date
+		,up_id
+	from 
+		ag113_tbl
+	where make_date = #{make_date}
+	]]>
+	</select>
+
+</mapper>
